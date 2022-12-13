@@ -13,7 +13,7 @@ cmake ..
 make
 ```
 
-#### Run unit tests
+### Run unit tests
 
 ```bash
 ctest
