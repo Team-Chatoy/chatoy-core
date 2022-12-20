@@ -14,3 +14,14 @@ add_test(
   NAME basictest
   COMMAND testlib
 )
+
+
+add_executable(test_session session.cpp)
+
+target_compile_features(test_session PRIVATE cxx_std_20)
+target_link_libraries(test_session PRIVATE chatoy_core Catch2::Catch2WithMain)
+
+add_test(
+  NAME test_session
+  COMMAND test_session
+)
