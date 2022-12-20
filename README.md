@@ -6,9 +6,9 @@ Written in C++ with love 🙌
 
 ### Dependencies
 
-- Boost 1.80.0
-- OpenSSL 3.0.7
-- Catch2 3.2.1
+- Boost-1.80.0
+- OpenSSL-3.0.7
+- Catch2-3.2.1 (Unit test)
 
 ### How to build
 
