@@ -5,47 +5,54 @@
 #include <chatoy/register.hpp>
 
 namespace chatoy {
-    // regist user to server
-    std::string regist(const std::string& url, const std::string& username, const std::string& password) {
-        namespace beast = boost::beast;
-        namespace http = beast::http;
-        namespace net = boost::asio;
-        using tcp = net::ip::tcp;
 
-        net::io_context ioc;
+// register new user
+auto regist(
+  const std::string& url,
+  const std::string& port,
+  const std::string& username,
+  const std::string& password
+) -> std::string {
+  namespace beast = boost::beast;
+  namespace http = beast::http;
+  namespace net = boost::asio;
+  using tcp = net::ip::tcp;
 
-        tcp::resolver resolver(ioc);
-        beast::tcp_stream stream(ioc);
+  net::io_context ioc;
 
-        // http://${url}:80
-        auto const results = resolver.resolve(url, "80");
+  tcp::resolver resolver(ioc);
+  beast::tcp_stream stream(ioc);
 
-        stream.connect(results);
+  // http://${url}:${port}
+  auto const results = resolver.resolve(url, port);
 
-        // POST / HTTP/1.1
-        http::request<http::string_body> req{http::verb::post, "/", 11};
-        req.set(http::field::host, url);
-        req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
-        req.set(http::field::content_type, "application/json");
-        req.body() = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
-        req.prepare_payload();
+  stream.connect(results);
 
-        http::write(stream, req);
+  // POST /users HTTP/1.1
+  http::request<http::string_body> req{http::verb::post, "/users", 11};
+  req.set(http::field::host, url);
+  req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+  req.set(http::field::content_type, "application/json");
+  req.body() = R"({"username":")" + username + R"(","password":")" + password + R"("})";
+  req.prepare_payload();
 
-        beast::flat_buffer buffer;
+  http::write(stream, req);
 
-        http::response<http::basic_string_body<char>> res;
-        http::read(stream, buffer, res);
+  beast::flat_buffer buffer;
 
-        std::string result = res.body();
+  http::response<http::basic_string_body<char>> res;
+  http::read(stream, buffer, res);
 
-        // Close the socket
-        beast::error_code ec;
-        stream.socket().shutdown(tcp::socket::shutdown_both, ec);
+  std::string result = res.body();
 
-        if (ec && ec != beast::errc::not_connected)
-            throw beast::system_error{ec};
+  // Close the socket
+  beast::error_code ec;
+  stream.socket().shutdown(tcp::socket::shutdown_both, ec);
 
-        return result;
-    }
+  if (ec && ec != beast::errc::not_connected)
+    throw beast::system_error{ec};
+
+  return result;
 }
+
+} // end namespace chatoy
