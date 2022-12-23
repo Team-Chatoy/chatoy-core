@@ -33,7 +33,7 @@ auto regist(
   req.set(http::field::host, url);
   req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
   req.set(http::field::content_type, "application/json");
-  req.body() = R"({"username":")" + username + R"(","password":")" + password + R"("})";
+  req.body() = R"({"username":")" + username + R"(","password":")" + password + R"("})"; // TODO: maybe use json library
   req.prepare_payload();
 
   http::write(stream, req);
