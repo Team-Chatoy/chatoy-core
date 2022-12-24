@@ -2,6 +2,7 @@
 
 #include <chatoy/core.hpp>
 #include <chatoy/register.hpp>
+#include <chatoy/login.hpp>
 
 TEST_CASE("basic test", "[basic]") {
   std::string expected =
@@ -20,6 +21,13 @@ TEST_CASE("basic test", "[basic]") {
 TEST_CASE("register test", "[register]") {
   std::string expected = R"({"code":2,"msg":"This username has been used!"})";
   std::string res = chatoy::regist("116.62.242.193", "4000", "ZhangSan", "114514");
+
+  REQUIRE(res == expected);
+}
+
+TEST_CASE("login test", "[login]") {
+  std::string expected = R"({"code":0,"msg":""})";
+  std::string res = chatoy::login("116.62.242.193", "4000", "ZhangSan", "114514");
 
   REQUIRE(res == expected);
 }
