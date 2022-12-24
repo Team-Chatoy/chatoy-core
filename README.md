@@ -8,6 +8,7 @@ Written in C++ with love 🙌
 
 - Boost-1.80.0
 - OpenSSL-3.0.7
+- nlohmann/json-3.11.2
 - Catch2-3.2.1 (Unit test)
 
 ### How to build
