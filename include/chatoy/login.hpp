@@ -4,12 +4,12 @@
 
 namespace chatoy {
 
-struct RegisterResp {
+struct LoginResp {
   int code;
   std::string msg;
 };
 
-RegisterResp regist(
+LoginResp login(
   const std::string& url,
   const std::string& port,
   const std::string& username,

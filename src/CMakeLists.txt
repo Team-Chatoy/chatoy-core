@@ -3,6 +3,7 @@ add_library(
   core.cpp
   session.cpp
   register.cpp
+  login.cpp
 )
 
 target_include_directories(chatoy_core PUBLIC ../include)

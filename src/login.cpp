@@ -4,22 +4,21 @@
 
 #include <nlohmann/json.hpp>
 
-#include <chatoy/register.hpp>
+#include <chatoy/login.hpp>
 
 namespace chatoy {
 
-void from_json(const nlohmann::json& j, RegisterResp& resp) {
+void from_json(const nlohmann::json& j, LoginResp& resp) {
   j.at("code").get_to(resp.code);
   j.at("msg").get_to(resp.msg);
 }
 
-// register new user
-auto regist(
+auto login(
   const std::string& url,
   const std::string& port,
   const std::string& username,
   const std::string& password
-) -> RegisterResp {
+) -> LoginResp {
   namespace beast = boost::beast;
   namespace http = beast::http;
   namespace net = boost::asio;
@@ -37,8 +36,8 @@ auto regist(
 
   stream.connect(results);
 
-  // POST /users HTTP/1.1
-  http::request<http::string_body> req{http::verb::post, "/users", 11};
+  // POST /login HTTP/1.1
+  http::request<http::string_body> req{http::verb::post, "/login", 11};
   req.set(http::field::host, url);
   req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
   req.set(http::field::content_type, "application/json");
@@ -56,7 +55,7 @@ auto regist(
   http::response<http::basic_string_body<char>> res;
   http::read(stream, buffer, res);
 
-  RegisterResp result = json::parse(res.body());
+  LoginResp result = json::parse(res.body());
 
   // Close the socket
   beast::error_code ec;
