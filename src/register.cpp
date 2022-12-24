@@ -2,6 +2,8 @@
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
 
+#include <nlohmann/json.hpp>
+
 #include <chatoy/register.hpp>
 
 namespace chatoy {
@@ -18,6 +20,8 @@ auto regist(
   namespace net = boost::asio;
   using tcp = net::ip::tcp;
 
+  using json = nlohmann::json;
+
   net::io_context ioc;
 
   tcp::resolver resolver(ioc);
@@ -33,7 +37,11 @@ auto regist(
   req.set(http::field::host, url);
   req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
   req.set(http::field::content_type, "application/json");
-  req.body() = R"({"username":")" + username + R"(","password":")" + password + R"("})"; // TODO: maybe use json library
+  json payload = {
+    {"username", username},
+    {"password", password}
+  };
+  req.body() = payload.dump();
   req.prepare_payload();
 
   http::write(stream, req);

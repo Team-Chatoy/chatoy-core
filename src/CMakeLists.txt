@@ -11,5 +11,6 @@ target_link_libraries(
   PRIVATE
   Boost::boost
   OpenSSL::SSL
+  nlohmann_json::nlohmann_json
 )
 target_compile_features(chatoy_core PUBLIC cxx_std_20)
