@@ -24,10 +24,3 @@ TEST_CASE("register test", "[register]") {
 
   REQUIRE(res == expected);
 }
-
-TEST_CASE("login test", "[login]") {
-  std::string expected = R"({"code":0,"msg":""})";
-  std::string res = chatoy::login("116.62.242.193", "4000", "ZhangSan", "114514");
-
-  REQUIRE(res == expected);
-}
