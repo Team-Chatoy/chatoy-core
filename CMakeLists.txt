@@ -6,6 +6,8 @@ project(
   LANGUAGES CXX
 )
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}-pthread")
+
 include(CTest)
 include(FetchContent)
 
