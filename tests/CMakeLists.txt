@@ -25,3 +25,23 @@ add_test(
   NAME test_session
   COMMAND test_session
 )
+
+add_executable(test_register register.cpp)
+
+target_compile_features(test_register PRIVATE cxx_std_20)
+target_link_libraries(test_register PRIVATE chatoy_core Catch2::Catch2WithMain)
+
+add_test(
+  NAME test_register
+  COMMAND test_register
+)
+
+add_executable(test_login login.cpp)
+
+target_compile_features(test_login PRIVATE cxx_std_20)
+target_link_libraries(test_login PRIVATE chatoy_core Catch2::Catch2WithMain)
+
+add_test(
+  NAME test_login
+  COMMAND test_login
+)
