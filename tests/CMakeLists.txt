@@ -45,3 +45,54 @@ add_test(
   NAME test_login
   COMMAND test_login
 )
+
+
+add_executable(test_createroom createroom.cpp)
+
+target_compile_features(test_createroom PRIVATE cxx_std_20)
+target_link_libraries(test_createroom PRIVATE chatoy_core Catch2::Catch2WithMain)
+
+add_test(
+  NAME test_createroom
+  COMMAND test_createroom
+)
+
+add_executable(test_joinroom joinroom.cpp)
+
+target_compile_features(test_joinroom PRIVATE cxx_std_20)
+target_link_libraries(test_joinroom PRIVATE chatoy_core Catch2::Catch2WithMain)
+
+add_test(
+  NAME test_joinroom
+  COMMAND test_joinroom
+)
+
+add_executable(test_getroom getroom.cpp)
+
+target_compile_features(test_getroom PRIVATE cxx_std_20)
+target_link_libraries(test_getroom PRIVATE chatoy_core Catch2::Catch2WithMain)
+
+add_test(
+  NAME test_getroom
+  COMMAND test_getroom
+)
+
+add_executable(test_roomsme roomsme.cpp)
+
+target_compile_features(test_roomsme PRIVATE cxx_std_20)
+target_link_libraries(test_roomsme PRIVATE chatoy_core Catch2::Catch2WithMain)
+
+add_test(
+  NAME test_roomsme
+  COMMAND test_roomsme
+)
+
+add_executable(test_getuser getuser.cpp)
+
+target_compile_features(test_getuser PRIVATE cxx_std_20)
+target_link_libraries(test_getuser PRIVATE chatoy_core Catch2::Catch2WithMain)
+
+add_test(
+  NAME test_getuser
+  COMMAND test_getuser
+)

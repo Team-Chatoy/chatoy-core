@@ -4,6 +4,8 @@ add_library(
   session.cpp
   register.cpp
   login.cpp
+  room.cpp
+  getuser.cpp
 )
 
 target_include_directories(chatoy_core PUBLIC ../include)
