@@ -15,7 +15,7 @@ struct UserInfo {
 
 UserInfo get_user(
 	const std::string& url,
-  const std::string& port,
+	const std::string& port,
 	const int userid
 );
 
