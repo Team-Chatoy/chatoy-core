@@ -12,7 +12,6 @@ void from_json(const nlohmann::json& j, UserInfo& resp) {
   j.at("id").get_to(resp.id);
   j.at("username").get_to(resp.username);
 	j.at("nickname").get_to(resp.nickname);
-	j.at("password").get_to(resp.password);
 	j.at("slogan").get_to(resp.slogan);
 	j.at("status").get_to(resp.status);
 	j.at("registered").get_to(resp.registered);

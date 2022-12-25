@@ -8,7 +8,6 @@ struct UserInfo {
 	int id;
 	std::string username;
 	std::string nickname;
-	std::string password;
 	std::string slogan;
 	int status;
 	std::string registered;
