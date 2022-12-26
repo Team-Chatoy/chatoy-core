@@ -10,7 +10,7 @@ include(CTest)
 include(FetchContent)
 
 find_package(Boost REQUIRED)
-find_package(OpenSSL REQUIRED)
+# find_package(OpenSSL REQUIRED)
 
 FetchContent_Declare(
   json

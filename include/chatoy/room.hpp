@@ -1,50 +1,49 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include <string>
 #include <vector>
+
+#include <chatoy/types.hpp>
+
 namespace chatoy {
 
-struct CreateResp {
-	int id;
-};
+auto create_room(
+  const std::string& host,
+  const std::string& token,
+  const std::string& name
+) -> IdResp;
 
-struct JoinResp {
-	int code;
-	std::string msg;
-};
+auto join_room(
+  const std::string& host,
+  const std::string& token,
+  const int id
+) -> Resp;
 
 struct RoomInfo {
-	int id;
-	std::string name;
-	std::string description;
-	std::string created;
+  int id;
+  std::string name;
+  std::string description;
+  std::string created;
 };
 
-CreateResp create_room(
-	const std::string& url,
-  const std::string& port,
-	const std::string& token,
-	const std::string& roomname
-);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
+  RoomInfo,
+  id,
+  name,
+  description,
+  created
+)
 
-JoinResp join_room(
-	const std::string& url,
-  const std::string& port,
-	const std::string& token,
-	const int roomid
-);
+auto get_room(
+  const std::string& host,
+  const int id
+) -> RoomInfo;
 
-RoomInfo get_room(
-	const std::string& url,
-  const std::string& port,
-	const int roomid
-);
-
-
-std::vector<RoomInfo> my_rooms(
-	const std::string& url,
-  const std::string& port,
-	const std::string& token
-);
+auto my_rooms(
+  const std::string& host,
+  const std::string& token
+) -> std::vector<RoomInfo>;
 
 } // end namespace chatoy

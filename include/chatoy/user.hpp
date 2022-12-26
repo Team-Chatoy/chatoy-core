@@ -1,31 +1,47 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include <string>
+
+#include <chatoy/types.hpp>
 
 namespace chatoy {
 
-class User {
-private:
-  std::string id;         // The id of this account.
-  std::string password;   // The password of this account.
-  std::string username;   // The username of this account.
-  std::string nickname;   // The nickname of this account.
-  std::string slogan;     // Introduction or motto, or something else.
-  std::string ststus;     // The status of this account.
-  std::string registed;   // The time when this account was registered.
+auto regist(
+  const std::string& host,
+  const std::string& username,
+  const std::string& password
+) -> Resp;
 
-public:
-  User();
-  User(const std::string& id, const std::string& password);
-  User(
-    const std::string& id,
-    const std::string& password,
-    const std::string& username,
-    const std::string& nickname,
-    const std::string& slogan,
-    const std::string& status,
-    const std::string& registed
-  );
+auto login(
+  const std::string& host,
+  const std::string& username,
+  const std::string& password
+) -> Resp;
+
+struct UserInfo {
+  int id;
+  std::string username;
+  std::string nickname;
+  std::string slogan;
+  int status;
+  std::string registered;
 };
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
+  UserInfo,
+  id,
+  username,
+  nickname,
+  slogan,
+  status,
+  registered
+)
+
+auto get_user(
+  const std::string& host,
+  const int id
+) -> UserInfo;
 
 } // end namespace chatoy
