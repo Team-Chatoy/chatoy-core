@@ -5,43 +5,35 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(catch)
 
-add_executable(testlib testlib.cpp)
+# Basic tests (http_req)
+add_executable(basic_test basic.cpp)
 
-target_compile_features(testlib PRIVATE cxx_std_20)
-target_link_libraries(testlib PRIVATE chatoy_core Catch2::Catch2WithMain)
+target_compile_features(basic_test PRIVATE cxx_std_20)
+target_link_libraries(basic_test PRIVATE chatoy_core Catch2::Catch2WithMain)
 
 add_test(
-  NAME basictest
-  COMMAND testlib
+  NAME basic
+  COMMAND basic_test
 )
 
+# User tests (register, login, get_user)
+add_executable(user_test user.cpp)
 
-add_executable(test_session session.cpp)
-
-target_compile_features(test_session PRIVATE cxx_std_20)
-target_link_libraries(test_session PRIVATE chatoy_core Catch2::Catch2WithMain)
+target_compile_features(user_test PRIVATE cxx_std_20)
+target_link_libraries(user_test PRIVATE chatoy_core Catch2::Catch2WithMain)
 
 add_test(
-  NAME test_session
-  COMMAND test_session
+  NAME user
+  COMMAND user_test
 )
 
-add_executable(test_register register.cpp)
+# Room tests (create, join, get, my_rooms)
+add_executable(room_test room.cpp)
 
-target_compile_features(test_register PRIVATE cxx_std_20)
-target_link_libraries(test_register PRIVATE chatoy_core Catch2::Catch2WithMain)
-
-add_test(
-  NAME test_register
-  COMMAND test_register
-)
-
-add_executable(test_login login.cpp)
-
-target_compile_features(test_login PRIVATE cxx_std_20)
-target_link_libraries(test_login PRIVATE chatoy_core Catch2::Catch2WithMain)
+target_compile_features(room_test PRIVATE cxx_std_20)
+target_link_libraries(room_test PRIVATE chatoy_core Catch2::Catch2WithMain)
 
 add_test(
-  NAME test_login
-  COMMAND test_login
+  NAME room
+  COMMAND room_test
 )
