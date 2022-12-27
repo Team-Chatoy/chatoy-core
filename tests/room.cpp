@@ -16,7 +16,7 @@ TEST_CASE("join_room") {
   auto [code, msg] = chatoy::join_room("116.62.242.193:4000", token, 1);
 
   REQUIRE(code == 4);
-  REQUIRE(msg == "Failed to join the new room!");
+  REQUIRE(msg == "Failed to join the room `1`!");
 }
 
 TEST_CASE("get_room") {
