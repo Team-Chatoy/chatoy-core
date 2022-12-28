@@ -8,7 +8,6 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 
-
 #include <chatoy/core.hpp>
 
 namespace chatoy {

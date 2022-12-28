@@ -37,11 +37,9 @@ Wsconnection::Wsconnection(
   ws.write(net::buffer(j.dump()));
 
   beast::flat_buffer buffer;
-
   ws.read(buffer);
   
   std::string ret = beast::buffers_to_string(buffer.data());
-
   this->auth_resp = nlohmann::json::parse(ret);
 }
 
@@ -71,11 +69,9 @@ auto Wsconnection::send_msg(
   ws.write(boost::asio::buffer(j.dump()));
 
   boost::beast::flat_buffer buffer;
-
   ws.read(buffer);
 
   std::string result = boost::beast::buffers_to_string(buffer.data());
-
   return nlohmann::json::parse(result);
 }
 
