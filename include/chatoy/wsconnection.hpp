@@ -18,7 +18,7 @@ private:
   boost::asio::io_context ioc;
   boost::beast::websocket::stream<boost::asio::ip::tcp::socket> ws{ioc};
 public:
-  AuthResp auth_resp;
+  AuthResp auth_resp; // for test
   Wsconnection(
     const std::string& raw_host,
     const std::string& token
