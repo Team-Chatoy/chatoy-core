@@ -1,12 +1,12 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <chatoy/wsconnect.hpp>
+#include <chatoy/wsconnection.hpp>
 #include <chatoy/user.hpp>
 #include <chatoy/types.hpp>
 
 TEST_CASE("ws connect") {
   chatoy::Resp res = chatoy::login("116.62.242.193:4000", "LiSi", "1919810");  
-  chatoy::Wsconnection wsc("116.62.242.193:4000", "/", res.msg);
+  chatoy::Wsconnection wsc("116.62.242.193:4000", res.msg);
 
   REQUIRE(wsc.auth_resp.msg == "");
   REQUIRE(wsc.auth_resp.code == 0);
@@ -15,7 +15,7 @@ TEST_CASE("ws connect") {
 
 TEST_CASE("ws sendmsg") {
   chatoy::Resp res = chatoy::login("116.62.242.193:4000", "LiSi", "1919810");  
-  chatoy::Wsconnection wsc("116.62.242.193:4000", "/", res.msg);
+  chatoy::Wsconnection wsc("116.62.242.193:4000", res.msg);
 
   chatoy::ReceiveMsg receive_msg = wsc.send_msg(1, "Text", "hello");
   chatoy::ReceiveMsg receive_msg2 = wsc.send_msg(1, "Text", "chatoy");

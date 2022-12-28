@@ -22,7 +22,6 @@ public:
   AuthResp auth_resp;
   Wsconnection(
     const std::string& raw_host,
-    const std::string& path,
     const std::string& token
   );
   auto send_msg (

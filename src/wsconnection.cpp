@@ -1,11 +1,10 @@
-#include <chatoy/wsconnect.hpp>
+#include <chatoy/wsconnection.hpp>
 #include <chatoy/types.hpp>
 
 namespace chatoy {
 
 Wsconnection::Wsconnection(
   const std::string& raw_host,
-  const std::string& path,
   const std::string& token
 ) {
   namespace beast = boost::beast;
