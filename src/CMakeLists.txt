@@ -3,6 +3,7 @@ add_library(
   core.cpp
   user.cpp
   room.cpp
+  wsconnect.cpp
 )
 
 target_include_directories(chatoy_core PUBLIC ../include)

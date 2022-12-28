@@ -37,3 +37,14 @@ add_test(
   NAME room
   COMMAND room_test
 )
+
+# ws tests
+add_executable(wsconnect_test ws.cpp)
+
+target_compile_features(wsconnect_test PRIVATE cxx_std_20)
+target_link_libraries(wsconnect_test PRIVATE chatoy_core Catch2::Catch2WithMain)
+
+add_test(
+  NAME wsconnect
+  COMMAND wsconnect_test
+)
