@@ -1,6 +1,13 @@
 #include <chatoy/wsconnection.hpp>
 #include <chatoy/types.hpp>
-
+#include <boost/beast/core.hpp>
+#include <boost/beast/websocket.hpp>
+#include <boost/asio/strand.hpp>
+#include <nlohmann/json.hpp>
+#include <cstdlib>
+#include <functional>
+#include <iostream>
+#include <memory>
 namespace chatoy {
 
 Wsconnection::Wsconnection(
@@ -47,10 +54,20 @@ Wsconnection::~Wsconnection() {
   ws.close(boost::beast::websocket::close_code::normal);
 }
 
+// Report a failure
+auto Wsconnection::fail(
+  beast::error_code ec,
+  char const* what
+) -> void {
+  std::cerr << what << ": " << ec.message() << "\n";
+}
+
+
 auto Wsconnection::send_msg(
   const int roomid,
   const std::string& text_type,
   const std::string& text 
+  const nlohmann::json& payload
 ) -> ReceiveMsg {
 
   boost::uuids::uuid a_uuid = boost::uuids::random_generator()(); 
@@ -60,13 +77,10 @@ auto Wsconnection::send_msg(
   text_data.type = text_type;
   text_data.text = text;
 
-  nlohmann::json j;
-  j["type"] = "Msg";
-  j["uuid"] = uuid;
-  j["room"] = roomid;
-  j["data"] = text_data;
+  payload["type"] = "Text";
 
-  ws.write(boost::asio::buffer(j.dump()));
+
+  ws.write(boost::asio::buffer(.dump()));
 
   boost::beast::flat_buffer buffer;
   ws.read(buffer);
@@ -75,4 +89,11 @@ auto Wsconnection::send_msg(
   return nlohmann::json::parse(result);
 }
 
+auto Wsconnection::receive_msg() -> ReceiveMsg {
+  boost::beast::flat_buffer buffer;
+  ws.read(buffer);
+
+  std::string result = boost::beast::buffers_to_string(buffer.data());
+  return nlohmann::json::parse(result);
 } // end namespace chatoy
+}
