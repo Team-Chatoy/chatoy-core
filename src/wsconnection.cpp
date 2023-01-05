@@ -1,13 +1,10 @@
 #include <chatoy/wsconnection.hpp>
-#include <chatoy/types.hpp>
-#include <boost/beast/core.hpp>
-#include <boost/beast/websocket.hpp>
-#include <boost/asio/strand.hpp>
+#include <chatoy/ws.hpp>
+
 #include <nlohmann/json.hpp>
-#include <cstdlib>
-#include <functional>
-#include <iostream>
-#include <memory>
+
+#include <thread>
+
 namespace chatoy {
 
 Wsconnection::Wsconnection(
@@ -48,6 +45,14 @@ Wsconnection::Wsconnection(
   
   std::string ret = beast::buffers_to_string(buffer.data());
   this->auth_resp = nlohmann::json::parse(ret);
+
+  //create a thread to receive message
+  std::thread t([&] {
+    while (true) {
+      receive_msg();
+    }
+  });
+  t.detach();
 }
 
 Wsconnection::~Wsconnection() {
@@ -95,5 +100,5 @@ auto Wsconnection::receive_msg() -> ReceiveMsg {
 
   std::string result = boost::beast::buffers_to_string(buffer.data());
   return nlohmann::json::parse(result);
-} // end namespace chatoy
 }
+} // end namespace chatoy
