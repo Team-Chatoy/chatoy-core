@@ -11,6 +11,7 @@ include(FetchContent)
 
 find_package(Boost REQUIRED)
 # find_package(OpenSSL REQUIRED)
+find_package(JNI REQUIRED)
 
 FetchContent_Declare(
   json
